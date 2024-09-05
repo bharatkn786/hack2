@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get Current Location</title>
+</head>
+<body>
+  <button onclick="getLocation()">Get Current Location</button>
+  <p id="location"></p>
+
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const locationText = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            
+            console.log(locationText); // Log to console
+            document.getElementById('location').textContent = locationText; // Display in the browser
+          },
+          function(error) {
+            console.error('Error getting location:', error);
+            document.getElementById('location').textContent = 'Unable to retrieve location.';
+          },
+          {
+            enableHighAccuracy: true, // Request high accuracy if available
+            timeout: 5000,            // Timeout after 5 seconds
+            maximumAge: 0            // Do not use cached position
+          }
+        );
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+        document.getElementById('location').textContent = 'Geolocation is not supported by this browser.';
+      }
+    }
+  </script>
+</body>
+</html>
+
